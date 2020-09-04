@@ -10,7 +10,7 @@ const SRC = path.resolve(__dirname, "frontend");
 module.exports = {
     mode: curEnv,
     entry: SRC + "/index.tsx",
-    devtool: "source-map",
+    devtool: "inline-source-map", //make 'source-map' for prod
     output: {
       path: DIST,
       filename: "[name].bundle.js",
@@ -49,7 +49,6 @@ module.exports = {
             test: /\.jsx?$/,
             loader: "babel-loader",
             /*use: [{loader: "loader-loader", options:{
-                      
               workerParallelJobs: 50,
               workerNodeArgs: ['--max-old-space-size=1024'],
             }}, "babel-loader"], */
@@ -180,7 +179,7 @@ module.exports = {
         title:require("./package.json").name
       }),
       new webpack.DefinePlugin({
-        env: JSON.stringify(process.env.NODE_ENV), //these are frontend globals
+        "global.env": JSON.stringify(process.env.NODE_ENV), //these are frontend globals
       }),
       new StylelintPlugin({
         configFile: __dirname + '/.stylelintrc.json',

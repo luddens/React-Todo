@@ -20,8 +20,8 @@ class Todolist extends Component {
       if(window.actuallyEmpty === true){
         list = [];
       } else {
-        console.log("localList");
-        console.log(localStorage.getItem("localList"));
+        // console.log("localList");
+        // console.log(localStorage.getItem("localList"));
         list = [
           "do thing a",
           "do thing b",

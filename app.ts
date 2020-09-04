@@ -4,7 +4,7 @@ const path = require("path");
 const app = express();
 const colors = require("colors");
 const bodyParser = require("body-parser");
-var cookieParser = require("cookie-parser")
+const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const stackTrace = require("stack-trace");
 const jwtHelper = require("./backend/utils/jwtHelper");
@@ -25,46 +25,6 @@ app.use(bodyParser.json());
 
 ejs.delimiter = "?";
 app.set("view engine", "ejs");
-
-app.use(function(req, res, next) {
-  const encodedToken = req.body.token ||
-    req.query.token ||
-    req.headers["x-access-token"] ||
-    req.cookies.token;
-
-  !n(encodedToken)? req.userToken = jwtHelper.verifyLoginToken(encodedToken):null;
- 
-  next();
-});
-
-
-app.get("/", (req,res) => {
-
-  if(!n(req.userToken)){
-    UserData.getUserByUsername(req.userToken, (getUserError, resUser)=>{
-      ListData.getListbyUserId(resUser.memberID, (getListError, resList)=>{
-
-        let actuallyEmpty = false;
-
-        if(resList.list.length === 0){
-          actuallyEmpty = true;
-        }
-
-        res.render(path.resolve(__dirname, "dist", "index.ejs"), {
-          lastUsedList: JSON.stringify(resList.list),
-          userListActuallyEmpty: actuallyEmpty
-        });
-
-      });
-    });
-  } else {
-    l("encodedToken is null");
-    res.render(path.resolve(__dirname, "dist", "index.ejs"), {
-      lastUsedList: JSON.stringify([]),
-      userListActuallyEmpty: false
-    });
-  }
-});
 
 app.use(express.static(path.join(__dirname, "dist")));
 
@@ -105,6 +65,47 @@ global.n = (val)=>{
   return (val === undefined || val === null);
 };
 
+
+
+app.use(function(req, res, next) {
+  const encodedToken = req.body.token ||
+    req.query.token ||
+    req.headers["x-access-token"] ||
+    req.cookies.token;
+
+  !n(encodedToken)? req.userToken = jwtHelper.verifyLoginToken(encodedToken):null;
+ 
+  next();
+});
+
+app.get("/", (req,res) => {
+
+  if(!n(req.userToken)){
+    UserData.getUserByUsername(req.userToken, (getUserError, resUser)=>{
+      ListData.getListbyUserId(resUser.memberID, (getListError, resList)=>{
+
+        let actuallyEmpty = false;
+
+        if(resList.list.length === 0){
+          actuallyEmpty = true;
+        }
+
+        res.render(path.resolve(__dirname, "dist", "index.ejs"), {
+          lastUsedList: JSON.stringify(resList.list),
+          userListActuallyEmpty: actuallyEmpty
+        });
+
+      });
+    });
+  } else {
+    l("encodedToken is null");
+    res.render(path.resolve(__dirname, "dist", "index.ejs"), {
+      lastUsedList: JSON.stringify([]),
+      userListActuallyEmpty: false
+    });
+  }
+});
+
 dbConnection(localConfig.dbCreds);
 
 app.use(require("./backend/list/listRoutes"));
@@ -121,5 +122,7 @@ app.get("/register/", function (req, res) {
 });
 
 app.listen(port, () => {
-  console.log(`Listening to app on server port ${port} in ${curEnv} mode`.yellow);
+  console.log(colors.yellow(`Listening to app on server port ${port} in ${curEnv} mode`));
 }); 
+
+export {};

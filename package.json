@@ -1,6 +1,6 @@
 {
   "author": "luddens",
-  "name": "react todo",
+  "name": "reacttodo",
   "license": "ISC",
   "version": "1.0.0",
   "description": "React todolist",
@@ -13,9 +13,8 @@
     "tsdev": "concurrently \"tsnd --project tsnodeconfig.json --respawn app.ts --watch backend --transpile-only\" \"webpack-dev-server\" \"npm run test\" ",
     "dev": "concurrently \"nodemon app.js\" \"webpack-dev-server\" \"npm run test\" ",
     "build": "webpack --config webpack.config.js",
-    "dev-build": "concurrently \"nodemon app.js\" \"webpack-dev-server\"",
-    "start": "npm run build",
-    "poststart": "\"nodemon app.js\"",
+    "tscf": "tsc --project tsconfig.json",
+    "tscb": "tsc --project tsnodeconfig.json",
     "test": "mocha --require ts-node/register --watch-extensions ts,tsx --require @babel/register --require ./tests/helpers.js --require ./tests/dom.js --require ignore-styles ./frontend/**/*test.js  -w",
     "kill": "concurrently \"kill-port 8080\" \"kill-port 3000\""
   },

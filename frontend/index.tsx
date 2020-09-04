@@ -11,6 +11,10 @@ ReactDOM.render(<App compiler="TypeScript" framework="React" />, document.getEle
 // Learn more about service workers: https://bit.ly/CRA-PWA
 //serviceWorker.unregister();
 
-if(env === "production"){
+console.log("this is env");
+// console.log(env);
+console.log(global.env);
+
+if(global.env === "production"){
     console.log = function(){};
 }

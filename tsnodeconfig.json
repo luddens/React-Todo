@@ -2,17 +2,23 @@
 
   "compileOnSave": true,
   "compilerOptions": {
+      "lib": ["es6"],
+      "types": ["node"],
+      "outDir": "./build/",
       "watch": true,
       "allowJs": true,
       "sourceMap": true,
-      "noImplicitAny": true,
-      "module": "commonjs",
+    //   "noImplicitAny": true,
       "target": "es6",
+      "module": "CommonJS",
       "alwaysStrict": false,
       "strict": false,
       "strictNullChecks": true,
       "esModuleInterop": true,
       "charset": "utf8",
+      "allowSyntheticDefaultImports": true,
+    //   "noUnusedLocals": true,
+    //   "noUnusedParameters": true,
       "incremental" : true
   },
   "include": [

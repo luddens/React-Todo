@@ -7,6 +7,7 @@ class Header extends Component {
   render(){
     return ( 
       <div id = "header">
+        <h1>Planner Pocket</h1>
       </div>
     );
   }
